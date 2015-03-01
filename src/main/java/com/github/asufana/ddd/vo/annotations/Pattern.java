@@ -1,4 +1,4 @@
-package com.github.asufana.ddd.annotations;
+package com.github.asufana.ddd.vo.annotations;
 
 import java.lang.annotation.*;
 

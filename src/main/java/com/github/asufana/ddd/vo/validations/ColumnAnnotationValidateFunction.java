@@ -1,4 +1,4 @@
-package com.github.asufana.ddd.validations;
+package com.github.asufana.ddd.vo.validations;
 
 import static org.apache.commons.lang3.StringUtils.*;
 
@@ -9,8 +9,8 @@ import java.util.*;
 
 import org.joda.time.*;
 
-import com.github.asufana.ddd.*;
-import com.github.asufana.ddd.exceptions.*;
+import com.github.asufana.ddd.vo.*;
+import com.github.asufana.ddd.vo.exceptions.*;
 
 public class ColumnAnnotationValidateFunction {
     

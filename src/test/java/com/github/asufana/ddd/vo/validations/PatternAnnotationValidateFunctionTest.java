@@ -1,12 +1,13 @@
-package com.github.asufana.ddd.validations;
+package com.github.asufana.ddd.vo.validations;
 
 import javax.persistence.*;
 
 import org.junit.*;
 
-import com.github.asufana.ddd.*;
-import com.github.asufana.ddd.annotations.*;
-import com.github.asufana.ddd.exceptions.*;
+import com.github.asufana.ddd.vo.*;
+import com.github.asufana.ddd.vo.annotations.*;
+import com.github.asufana.ddd.vo.exceptions.*;
+import com.github.asufana.ddd.vo.validations.*;
 
 public class PatternAnnotationValidateFunctionTest {
     

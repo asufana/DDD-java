@@ -1,4 +1,4 @@
-package com.github.asufana.ddd.validations;
+package com.github.asufana.ddd.vo.validations;
 
 import java.math.*;
 
@@ -7,8 +7,9 @@ import javax.persistence.*;
 import org.joda.time.*;
 import org.junit.*;
 
-import com.github.asufana.ddd.*;
-import com.github.asufana.ddd.exceptions.*;
+import com.github.asufana.ddd.vo.*;
+import com.github.asufana.ddd.vo.exceptions.*;
+import com.github.asufana.ddd.vo.validations.*;
 
 public class ColumnAnnotationValidateFunctionTest {
     

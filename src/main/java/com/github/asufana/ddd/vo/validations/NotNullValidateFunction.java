@@ -1,12 +1,12 @@
-package com.github.asufana.ddd.validations;
+package com.github.asufana.ddd.vo.validations;
 
 import java.lang.reflect.*;
 import java.util.*;
 
 import javax.persistence.*;
 
-import com.github.asufana.ddd.exceptions.*;
-import com.github.asufana.ddd.functions.*;
+import com.github.asufana.ddd.vo.exceptions.*;
+import com.github.asufana.ddd.vo.functions.*;
 
 public class NotNullValidateFunction {
     

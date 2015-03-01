@@ -1,11 +1,11 @@
-package com.github.asufana.ddd;
+package com.github.asufana.ddd.vo;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
 
 import org.junit.*;
 
-import com.github.asufana.ddd.share.*;
+import com.github.asufana.ddd.vo.share.*;
 
 public class AbstractValueObjectTest {
     

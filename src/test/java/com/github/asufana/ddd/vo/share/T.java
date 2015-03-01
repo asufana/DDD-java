@@ -1,8 +1,8 @@
-package com.github.asufana.ddd.share;
+package com.github.asufana.ddd.vo.share;
 
 import javax.persistence.*;
 
-import com.github.asufana.ddd.*;
+import com.github.asufana.ddd.vo.*;
 
 public class T {
     

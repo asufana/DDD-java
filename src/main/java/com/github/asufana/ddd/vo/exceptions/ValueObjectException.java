@@ -1,4 +1,4 @@
-package com.github.asufana.ddd.exceptions;
+package com.github.asufana.ddd.vo.exceptions;
 
 import java.lang.reflect.*;
 

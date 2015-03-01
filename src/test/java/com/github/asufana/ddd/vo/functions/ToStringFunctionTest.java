@@ -1,4 +1,4 @@
-package com.github.asufana.ddd.functions;
+package com.github.asufana.ddd.vo.functions;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -7,7 +7,8 @@ import java.lang.reflect.*;
 
 import org.junit.*;
 
-import com.github.asufana.ddd.share.*;
+import com.github.asufana.ddd.vo.functions.*;
+import com.github.asufana.ddd.vo.share.*;
 
 public class ToStringFunctionTest {
     

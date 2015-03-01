@@ -1,10 +1,10 @@
-package com.github.asufana.ddd.functions;
+package com.github.asufana.ddd.vo.functions;
 
 import java.lang.reflect.*;
 
 import org.apache.commons.lang3.builder.*;
 
-import com.github.asufana.ddd.*;
+import com.github.asufana.ddd.vo.*;
 
 public abstract class ToStringFunction {
     

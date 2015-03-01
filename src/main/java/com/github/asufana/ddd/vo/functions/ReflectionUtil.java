@@ -1,10 +1,10 @@
-package com.github.asufana.ddd.functions;
+package com.github.asufana.ddd.vo.functions;
 
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.*;
 
-import com.github.asufana.ddd.*;
+import com.github.asufana.ddd.vo.*;
 
 public class ReflectionUtil {
     

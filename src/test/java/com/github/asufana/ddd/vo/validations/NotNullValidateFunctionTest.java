@@ -1,9 +1,10 @@
-package com.github.asufana.ddd.validations;
+package com.github.asufana.ddd.vo.validations;
 
 import org.junit.*;
 
-import com.github.asufana.ddd.exceptions.*;
-import com.github.asufana.ddd.share.*;
+import com.github.asufana.ddd.vo.exceptions.*;
+import com.github.asufana.ddd.vo.share.*;
+import com.github.asufana.ddd.vo.validations.*;
 
 public class NotNullValidateFunctionTest {
     
