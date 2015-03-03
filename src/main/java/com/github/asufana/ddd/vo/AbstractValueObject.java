@@ -1,11 +1,9 @@
 package com.github.asufana.ddd.vo;
 
-
 import org.apache.commons.lang3.builder.*;
 
 import com.github.asufana.ddd.vo.functions.*;
 import com.github.asufana.ddd.vo.validations.*;
-import com.github.asufana.ddd.vo.validations.ColumnAnnotationValidateFunction.*;
 
 public abstract class AbstractValueObject {
     
@@ -37,9 +35,5 @@ public abstract class AbstractValueObject {
         ColumnAnnotationValidateFunction.validate(this);
         PatternAnnotationValidateFunction.validate(this);
         NotNullValidateFunction.validate(this);
-    }
-    
-    FieldInfoCollection fields() {
-        return ColumnAnnotationValidateFunction.fields(this);
     }
 }

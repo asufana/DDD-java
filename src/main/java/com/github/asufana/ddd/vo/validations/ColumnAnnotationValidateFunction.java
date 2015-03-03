@@ -2,10 +2,11 @@ package com.github.asufana.ddd.vo.validations;
 
 import static org.apache.commons.lang3.StringUtils.*;
 
-import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.math.*;
 import java.util.*;
+
+import javax.persistence.*;
 
 import org.joda.time.*;
 
@@ -44,18 +45,21 @@ public class ColumnAnnotationValidateFunction {
     /** Fieldラッパークラス */
     public static class FieldInfo {
         //フィールド定義
-        private final Field field;
+        public final Field field;
+        /** フィールド名 */
+        public final String name;
         //実インスタンス
-        private final Object object;
+        public final Object object;
         //フィールドの文字長制約（制約設定がなければnull）
-        private final Integer length;
+        public final Integer length;
         //フィールドがnull許容かどうか
-        private final boolean nullable;
+        public final boolean nullable;
         
         //インスタンス
         public FieldInfo(final Field field, final Object object) {
             this.field = field;
             this.object = object;
+            name = field.getName();
             length = length(field);
             nullable = nullable(field);
             
@@ -63,10 +67,37 @@ public class ColumnAnnotationValidateFunction {
             isSupported(field);
         }
         
+        /** Columnアノテーションのlength値 */
+        private Integer length(final Field field) {
+            //String以外は文字長チェックしない
+            if (field.getType().equals(String.class) == false) {
+                return null;
+            }
+            final Column column = getColumnAnnotation(field);
+            return column != null
+                    ? column.length()
+                    : null;
+        }
+        
+        /** Columnアノテーションのnullable値 */
+        private boolean nullable(final Field field) {
+            final Column column = getColumnAnnotation(field);
+            return column != null
+                    ? column.nullable()
+                    : true;
+        }
+        
+        private Column getColumnAnnotation(final Field field) {
+            return field.getDeclaredAnnotation(Column.class);
+        }
+        
         /** 内部クラス種別の確認 */
         public void isSupported(final Field field) {
-            @SuppressWarnings("rawtypes") final Class clazz = field().getType();
-            //指定のプリミティブ型以外は対応しない
+            if (getColumnAnnotation(field) == null) {
+                return;
+            }
+            
+            final Class<?> clazz = field.getType();
             if (!clazz.equals(String.class)
                     && !clazz.equals(Integer.class)
                     && !clazz.equals(Long.class)
@@ -80,86 +111,37 @@ public class ColumnAnnotationValidateFunction {
         
         /** バリデーション */
         public void validate() throws IllegalArgumentException, IllegalAccessException {
-            //Nullチェック
+            if (getColumnAnnotation(field) == null) {
+                return;
+            }
             validateNotNull();
-            //文字長チェック
             validateLength();
         }
         
         //文字長確認
         void validateLength() throws IllegalArgumentException, IllegalAccessException {
-            final Object o = field().get(object());
+            final Object o = field.get(object);
             if (o != null && length != null) {
                 final String value = (String) o;
                 if (value.length() > length) {
-                    throw ValueObjectException.overLengthException(field());
+                    throw ValueObjectException.overLengthException(field);
                 }
             }
         }
         
         //null許容確認
         void validateNotNull() throws IllegalArgumentException, IllegalAccessException {
-            final Object o = field().get(object());
+            final Object o = field.get(object);
             if (nullable == false) {
                 if (o == null) {
-                    throw ValueObjectException.nullException(field());
+                    throw ValueObjectException.nullException(field);
                 }
                 //String型の場合、空文字は不可
                 if (length != null && isEmpty((String) o)) {
-                    throw ValueObjectException.nullException(field());
+                    throw ValueObjectException.nullException(field);
                 }
             }
         }
-        
-        /** フィールド */
-        public Field field() {
-            return field;
-        }
-        
-        /** 実インスタンス */
-        public Object object() {
-            return object;
-        }
-        
-        /** フィールド名 */
-        public String name() {
-            return field().getName();
-        }
-        
-        /** 最大文字長 */
-        public Integer length() {
-            return length;
-        }
-        
-        /** NULL許容可否 */
-        public boolean nullable() {
-            return nullable;
-        }
-        
-        /** Columnアノテーションのlength値 */
-        private Integer length(final Field field) {
-            //String以外は文字長チェックしない
-            if (field.getType().equals(String.class) == false) {
-                return null;
-            }
-            for (final Annotation a : field.getDeclaredAnnotations()) {
-                if (a instanceof javax.persistence.Column) {
-                    return ((javax.persistence.Column) a).length();
-                }
-            }
-            return null;
-        }
-        
-        /** Columnアノテーションのnullable値 */
-        private boolean nullable(final Field field) {
-            for (final Annotation a : field.getDeclaredAnnotations()) {
-                if (a instanceof javax.persistence.Column) {
-                    return ((javax.persistence.Column) a).nullable();
-                }
-            }
-            return true;
-        }
-        
     }
     
     /** Fieldクラスコレクション */
@@ -188,7 +170,7 @@ public class ColumnAnnotationValidateFunction {
         /** フィールドの取得 */
         public FieldInfo get(final String fieldName) {
             for (final FieldInfo f : fields) {
-                if (f.name().toLowerCase().equals(fieldName.toLowerCase())) {
+                if (f.name.toLowerCase().equals(fieldName.toLowerCase())) {
                     return f;
                 }
             }

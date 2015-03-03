@@ -4,7 +4,6 @@ import org.junit.*;
 
 import com.github.asufana.ddd.vo.exceptions.*;
 import com.github.asufana.ddd.vo.share.*;
-import com.github.asufana.ddd.vo.validations.*;
 
 public class NotNullValidateFunctionTest {
     
