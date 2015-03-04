@@ -20,8 +20,8 @@ public abstract class AbstractEntity<T extends EnhancedPlayGenericModel> extends
     }
     
     //値オブジェクトnullチェック
-    protected void notNull(final Object entity) {
-        NotNullValidateFunction.validate(entity);
+    protected void notNull() {
+        NotNullValidateFunction.validate(this);
     }
     
     protected boolean sameIdentityAs(final T other) {
