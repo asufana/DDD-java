@@ -41,7 +41,7 @@ public class PatternAnnotationValidateFunction {
     private static String getRegexPatten(final Field field) {
         final Pattern annotation = field.getAnnotation(Pattern.class);
         return annotation != null
-                ? annotation.regexp()
+                ? annotation.regex()
                 : null;
     }
     

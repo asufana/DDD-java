@@ -24,7 +24,7 @@ public class PatternAnnotationValidateFunctionTest {
     
     static class StringVo extends AbstractValueObject {
         @Column
-        @Pattern(regexp = "^[A-Z][0-9]{3}$")
+        @Pattern(regex = "^[A-Z][0-9]{3}$")
         public final String value;
         
         public StringVo(final String value) {
