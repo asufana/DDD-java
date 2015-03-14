@@ -4,6 +4,8 @@ import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.*;
 
+import javax.persistence.*;
+
 import com.github.asufana.ddd.vo.*;
 
 public class ReflectionUtil {
@@ -53,6 +55,13 @@ public class ReflectionUtil {
     
     private static List<Field> getFields(final Field field) {
         return Arrays.asList(field.getType().getDeclaredFields());
+    }
+    
+    public static List<Field> getColumnAnnotationFields(final Object instance) {
+        return getFields(instance).stream().filter(field -> {
+            field.setAccessible(true);
+            return field.getDeclaredAnnotation(Column.class) != null;
+        }).collect(Collectors.toList());
     }
     
 }

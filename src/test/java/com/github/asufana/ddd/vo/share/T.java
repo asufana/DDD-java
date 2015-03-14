@@ -6,6 +6,7 @@ import com.github.asufana.ddd.vo.*;
 
 public class T {
     
+    //nullable=true
     public static class VoGroupNullableTrue extends AbstractValueObject {
         @SuppressWarnings("unused")
         private final VoNullableTrue vo01;
@@ -19,6 +20,7 @@ public class T {
         }
     }
     
+    //nullable=false
     public static class VoGroupNullableFalse extends AbstractValueObject {
         @SuppressWarnings("unused")
         private final VoNullableFalse vo01;
@@ -32,6 +34,7 @@ public class T {
         }
     }
     
+    //no @Column annotation
     public static class VoGroupNoColumnAnnotation extends AbstractValueObject {
         @SuppressWarnings("unused")
         private final VoNoColumnAnnotation vo01;
@@ -45,6 +48,7 @@ public class T {
         }
     }
     
+    //mix
     public static class VoGroupMix extends AbstractValueObject {
         @SuppressWarnings("unused")
         private final VoNullableTrue vo01;
@@ -62,6 +66,46 @@ public class T {
         }
     }
     
+    //------------------------------------------------
+    
+    //direct annotation: nullable=true
+    public static class VoGroupDirectAnnotationNullableTrue extends AbstractValueObject {
+        @Column(nullable = true)
+        private final Integer someValue;
+        
+        public VoGroupDirectAnnotationNullableTrue(final Integer someValue) {
+            this.someValue = someValue;
+        }
+    }
+    
+    //direct annotation: nullable=false
+    public static class VoGroupDirectAnnotationNullableFalse extends AbstractValueObject {
+        @Column(nullable = false)
+        private final Integer someValue;
+        
+        public VoGroupDirectAnnotationNullableFalse(final Integer someValue) {
+            this.someValue = someValue;
+        }
+    }
+    
+    //direct annotation: nullable=mix
+    public static class VoGroupDirectAnnotationMix extends AbstractValueObject {
+        @Column(nullable = true)
+        private final Integer someValueTrue;
+        
+        @Column(nullable = false)
+        private final Integer someValueFalse;
+        
+        public VoGroupDirectAnnotationMix(final Integer someValueTrue,
+                final Integer someValueFalse) {
+            this.someValueTrue = someValueTrue;
+            this.someValueFalse = someValueFalse;
+        }
+    }
+    
+    //------------------------------------------------
+    
+    //nullable=false
     public static class VoNullableFalse extends AbstractValueObject {
         @Column(nullable = false)
         private final String value;
@@ -71,6 +115,7 @@ public class T {
         }
     }
     
+    //nullable=true
     public static class VoNullableTrue extends AbstractValueObject {
         @Column(nullable = true)
         private final String value;
@@ -80,6 +125,7 @@ public class T {
         }
     }
     
+    //no @Column annotation
     public static class VoNoColumnAnnotation extends AbstractValueObject {
         @SuppressWarnings("unused")
         private final String value;

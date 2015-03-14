@@ -9,7 +9,6 @@ import java.util.*;
 import org.junit.*;
 
 import com.github.asufana.ddd.vo.*;
-import com.github.asufana.ddd.vo.functions.*;
 import com.github.asufana.ddd.vo.share.*;
 
 public class ReflectionUtilTest {
@@ -41,4 +40,10 @@ public class ReflectionUtilTest {
         assertThat(fields.size(), is(2));
     }
     
+    @Test
+    public void testGetColumnAnnotationFields() throws Exception {
+        final List<Field> fields = ReflectionUtil.getColumnAnnotationFields(new T.VoGroupDirectAnnotationMix(null,
+                                                                                                             null));
+        assertThat(fields.size(), is(2));
+    }
 }
