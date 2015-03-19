@@ -48,7 +48,7 @@ public class NotNullValidateFunction {
                                  final Field field,
                                  final Column column) {
         if (column != null && column.nullable() == false && isNull(o, field)) {
-            throw ValueObjectException.nullException(field);
+            throw ValueObjectException.nullException(o, field);
         }
     }
     

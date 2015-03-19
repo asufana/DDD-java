@@ -7,19 +7,21 @@ public class ValueObjectException extends RuntimeException {
     
     private final String message;
     
-    public static ValueObjectException overLengthException(final Field field) {
-        return new ValueObjectException(String.format("ValueObjectException: %s: %s.%s",
+    public static ValueObjectException overLengthException(final Object o,
+                                                           final Field field) {
+        return new ValueObjectException(String.format("ValueObjectException: %s: %s#%s",
                                                       "文字列が超過しています",
-                                                      field.getType()
-                                                           .getSimpleName(),
+                                                      o.getClass()
+                                                       .getSimpleName(),
                                                       field.getName()));
     }
     
-    public static ValueObjectException nullException(final Field field) {
-        return new ValueObjectException(String.format("ValueObjectException: %s: %s.%s",
+    public static ValueObjectException nullException(final Object o,
+                                                     final Field field) {
+        return new ValueObjectException(String.format("ValueObjectException: %s: %s#%s",
                                                       "値が設定されていません",
-                                                      field.getType()
-                                                           .getSimpleName(),
+                                                      o.getClass()
+                                                       .getSimpleName(),
                                                       field.getName()));
     }
     

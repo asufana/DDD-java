@@ -124,7 +124,8 @@ public class ColumnAnnotationValidateFunction {
             if (o != null && length != null) {
                 final String value = (String) o;
                 if (value.length() > length) {
-                    throw ValueObjectException.overLengthException(field);
+                    throw ValueObjectException.overLengthException(object,
+                                                                   field);
                 }
             }
         }
@@ -134,11 +135,11 @@ public class ColumnAnnotationValidateFunction {
             final Object o = field.get(object);
             if (nullable == false) {
                 if (o == null) {
-                    throw ValueObjectException.nullException(field);
+                    throw ValueObjectException.nullException(object, field);
                 }
                 //String型の場合、空文字は不可
                 if (length != null && isEmpty((String) o)) {
-                    throw ValueObjectException.nullException(field);
+                    throw ValueObjectException.nullException(object, field);
                 }
             }
         }
