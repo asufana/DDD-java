@@ -4,6 +4,7 @@ import org.junit.*;
 
 import com.github.asufana.ddd.vo.exceptions.*;
 import com.github.asufana.ddd.vo.share.*;
+import com.github.asufana.ddd.vo.share.T.SomeEntity;
 
 public class NotNullValidateFunctionTest {
     
@@ -79,6 +80,18 @@ public class NotNullValidateFunctionTest {
         //例外が発生すること
         NotNullValidateFunction.validate(new T.VoGroupDirectAnnotationMix(null,
                                                                           null));
+    }
+    
+    @Test
+    public void testValidateManyToOneAnnotation() throws Exception {
+        //例外が発生しないこと
+        NotNullValidateFunction.validate(new T.VoGroupManyToOne(new SomeEntity()));
+    }
+    
+    @Test(expected = EntityException.class)
+    public void testValidateManyToOneAnnotationNull() throws Exception {
+        //例外が発生すること
+        NotNullValidateFunction.validate(new T.VoGroupManyToOne(null));
     }
     
 }

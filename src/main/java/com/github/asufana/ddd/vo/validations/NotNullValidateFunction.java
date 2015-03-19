@@ -13,16 +13,18 @@ import com.github.asufana.ddd.vo.functions.*;
 public class NotNullValidateFunction {
     
     public static <T extends AbstractEntity<?>> void validate(final T o) {
-        validateByVOColumnAnnotation(o);
+        validateByEmbeddedColumnAnnotation(o);
         validateByDirectColumnAnnotation(o);
+        validateByManyToOneAnnotation(o);
     }
     
     public static <T extends AbstractValueObject> void validate(final T o) {
-        validateByVOColumnAnnotation(o);
+        validateByEmbeddedColumnAnnotation(o);
         validateByDirectColumnAnnotation(o);
+        validateByManyToOneAnnotation(o);
     }
     
-    private static void validateByVOColumnAnnotation(final Object o) {
+    private static void validateByEmbeddedColumnAnnotation(final Object o) {
         final List<Field> fields = ReflectionUtil.getValueObjectFields(o);
         for (final Field field : fields) {
             final Field valueField = ReflectionUtil.getValueField(field);
@@ -30,11 +32,7 @@ public class NotNullValidateFunction {
                 continue;
             }
             final Column column = valueField.getDeclaredAnnotation(Column.class);
-            if (column != null
-                    && column.nullable() == false
-                    && isNull(o, field)) {
-                throw ValueObjectException.nullException(field);
-            }
+            validate(o, field, column);
         }
     }
     
@@ -42,21 +40,33 @@ public class NotNullValidateFunction {
         final List<Field> fields = ReflectionUtil.getColumnAnnotationFields(o);
         for (final Field field : fields) {
             final Column column = field.getDeclaredAnnotation(Column.class);
-            if (column != null
-                    && column.nullable() == false
-                    && isNull(o, field)) {
-                throw ValueObjectException.nullException(field);
-            }
+            validate(o, field, column);
         }
     }
     
-    private static boolean isNull(final Object vo, final Field field) {
+    private static void validate(final Object o,
+                                 final Field field,
+                                 final Column column) {
+        if (column != null && column.nullable() == false && isNull(o, field)) {
+            throw ValueObjectException.nullException(field);
+        }
+    }
+    
+    private static boolean isNull(final Object o, final Field field) {
         try {
-            final Object object = field.get(vo);
+            final Object object = field.get(o);
             return object == null;
         }
         catch (IllegalArgumentException | IllegalAccessException e) {}
         return false;
     }
     
+    private static void validateByManyToOneAnnotation(final Object o) {
+        final List<Field> fields = ReflectionUtil.getManyToOneAnnotationFields(o);
+        for (final Field field : fields) {
+            if (isNull(o, field)) {
+                throw EntityException.nullException(o, field);
+            }
+        }
+    }
 }

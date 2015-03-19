@@ -1,5 +1,6 @@
 package com.github.asufana.ddd.vo.functions;
 
+import java.lang.annotation.*;
 import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.*;
@@ -10,7 +11,6 @@ import com.github.asufana.ddd.vo.*;
 
 public class ReflectionUtil {
     
-    // get "value" field
     public static <T extends AbstractValueObject> Field getValueField(final T vo) {
         return getValueField(getFields(vo));
     }
@@ -42,26 +42,35 @@ public class ReflectionUtil {
                             .collect(Collectors.toList());
     }
     
-    public static List<Field> getValueObjectFields(final Object vo) {
-        return getFields(vo).stream().filter(field -> {
+    public static List<Field> getValueObjectFields(final Object o) {
+        return getFields(o).stream().filter(field -> {
             field.setAccessible(true);
             return AbstractValueObject.class.isAssignableFrom(field.getType());
         }).collect(Collectors.toList());
     }
     
-    private static List<Field> getFields(final Object vo) {
-        return Arrays.asList(vo.getClass().getDeclaredFields());
+    public static List<Field> getColumnAnnotationFields(final Object o) {
+        return getFieldsByAnnotationType(o, Column.class);
+    }
+    
+    public static List<Field> getManyToOneAnnotationFields(final Object o) {
+        return getFieldsByAnnotationType(o, ManyToOne.class);
+    }
+    
+    private static List<Field> getFieldsByAnnotationType(final Object o,
+                                                         final Class<? extends Annotation> annotationClass) {
+        return getFields(o).stream().filter(field -> {
+            field.setAccessible(true);
+            return field.getDeclaredAnnotation(annotationClass) != null;
+        }).collect(Collectors.toList());
+    }
+    
+    private static List<Field> getFields(final Object o) {
+        return Arrays.asList(o.getClass().getDeclaredFields());
     }
     
     private static List<Field> getFields(final Field field) {
         return Arrays.asList(field.getType().getDeclaredFields());
-    }
-    
-    public static List<Field> getColumnAnnotationFields(final Object instance) {
-        return getFields(instance).stream().filter(field -> {
-            field.setAccessible(true);
-            return field.getDeclaredAnnotation(Column.class) != null;
-        }).collect(Collectors.toList());
     }
     
 }

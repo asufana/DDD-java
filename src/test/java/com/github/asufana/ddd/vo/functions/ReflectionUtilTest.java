@@ -46,4 +46,10 @@ public class ReflectionUtilTest {
                                                                                                              null));
         assertThat(fields.size(), is(2));
     }
+    
+    @Test
+    public void testGetOneToManyAnnotationFields() throws Exception {
+        final List<Field> fields = ReflectionUtil.getManyToOneAnnotationFields(new T.VoGroupManyToOne());
+        assertThat(fields.size(), is(1));
+    }
 }

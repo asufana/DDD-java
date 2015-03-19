@@ -2,6 +2,7 @@ package com.github.asufana.ddd.vo.share;
 
 import javax.persistence.*;
 
+import com.github.asufana.ddd.entity.*;
 import com.github.asufana.ddd.vo.*;
 
 public class T {
@@ -101,6 +102,24 @@ public class T {
             this.someValueTrue = someValueTrue;
             this.someValueFalse = someValueFalse;
         }
+    }
+    
+    //------------------------------------------------
+    
+    public static class VoGroupManyToOne extends AbstractValueObject {
+        @ManyToOne
+        private SomeEntity someEntity;
+        
+        public VoGroupManyToOne() {}
+        
+        public VoGroupManyToOne(final SomeEntity someEntity) {
+            this.someEntity = someEntity;
+        }
+    }
+    
+    public static class SomeEntity extends AbstractEntity<SomeEntity> {
+        @Override
+        public void isSatisfied() {}
     }
     
     //------------------------------------------------
