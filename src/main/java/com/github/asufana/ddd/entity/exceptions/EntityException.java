@@ -1,5 +1,7 @@
 package com.github.asufana.ddd.entity.exceptions;
 
+import java.lang.reflect.*;
+
 public class EntityException extends RuntimeException {
     private static final long serialVersionUID = 1L;
     
@@ -9,6 +11,14 @@ public class EntityException extends RuntimeException {
         return new EntityException(String.format("EntityException: %s: %s",
                                                  "Entityが重複しています",
                                                  message));
+    }
+    
+    public static EntityException nullException(final Object o,
+                                                final Field field) {
+        return new EntityException(String.format("EntityException: %s: %s#%s",
+                                                 "ManyToOneフィールドに値が設定されていません",
+                                                 o.getClass().getSimpleName(),
+                                                 field.getName()));
     }
     
     public EntityException(final String message) {

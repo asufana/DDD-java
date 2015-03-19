@@ -2,6 +2,7 @@ package com.github.asufana.ddd.vo.validations;
 
 import org.junit.*;
 
+import com.github.asufana.ddd.entity.exceptions.*;
 import com.github.asufana.ddd.vo.exceptions.*;
 import com.github.asufana.ddd.vo.share.*;
 import com.github.asufana.ddd.vo.share.T.SomeEntity;

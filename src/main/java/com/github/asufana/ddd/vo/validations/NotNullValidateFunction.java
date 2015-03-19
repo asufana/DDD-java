@@ -8,6 +8,7 @@ import javax.persistence.*;
 import org.hibernate.annotations.*;
 
 import com.github.asufana.ddd.entity.*;
+import com.github.asufana.ddd.entity.exceptions.*;
 import com.github.asufana.ddd.vo.*;
 import com.github.asufana.ddd.vo.exceptions.*;
 import com.github.asufana.ddd.vo.functions.*;
