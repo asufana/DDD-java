@@ -5,6 +5,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.*;
+
 import com.github.asufana.ddd.entity.*;
 import com.github.asufana.ddd.vo.*;
 import com.github.asufana.ddd.vo.exceptions.*;
@@ -64,6 +66,13 @@ public class NotNullValidateFunction {
     private static void validateByManyToOneAnnotation(final Object o) {
         final List<Field> fields = ReflectionUtil.getManyToOneAnnotationFields(o);
         for (final Field field : fields) {
+            final NotFound notFoundAnnotation = field.getDeclaredAnnotation(NotFound.class);
+            if (notFoundAnnotation != null
+                    && notFoundAnnotation.action() != null
+                    && notFoundAnnotation.action()
+                                         .equals(NotFoundAction.IGNORE)) {
+                continue;
+            }
             if (isNull(o, field)) {
                 throw EntityException.nullException(o, field);
             }

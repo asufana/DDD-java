@@ -2,6 +2,8 @@ package com.github.asufana.ddd.vo.share;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.*;
+
 import com.github.asufana.ddd.entity.*;
 import com.github.asufana.ddd.vo.*;
 
@@ -113,6 +115,18 @@ public class T {
         public VoGroupManyToOne() {}
         
         public VoGroupManyToOne(final SomeEntity someEntity) {
+            this.someEntity = someEntity;
+        }
+    }
+    
+    public static class VoGroupManyToOneWithNotFoundAnnotation extends AbstractValueObject {
+        @ManyToOne
+        @NotFound(action = NotFoundAction.IGNORE)
+        private SomeEntity someEntity;
+        
+        public VoGroupManyToOneWithNotFoundAnnotation() {}
+        
+        public VoGroupManyToOneWithNotFoundAnnotation(final SomeEntity someEntity) {
             this.someEntity = someEntity;
         }
     }

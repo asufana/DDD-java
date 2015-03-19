@@ -89,9 +89,21 @@ public class NotNullValidateFunctionTest {
     }
     
     @Test(expected = EntityException.class)
-    public void testValidateManyToOneAnnotationNull() throws Exception {
+    public void testValidateManyToOneAnnotationException() throws Exception {
         //例外が発生すること
         NotNullValidateFunction.validate(new T.VoGroupManyToOne(null));
+    }
+    
+    @Test
+    public void testValidateManyToOneAnnotationWithNotFound() throws Exception {
+        //例外が発生しないこと
+        NotNullValidateFunction.validate(new T.VoGroupManyToOneWithNotFoundAnnotation(new SomeEntity()));
+    }
+    
+    @Test
+    public void testValidateManyToOneAnnotationWithNotFoundException() throws Exception {
+        //例外が発生しないこと
+        NotNullValidateFunction.validate(new T.VoGroupManyToOneWithNotFoundAnnotation(null));
     }
     
 }
