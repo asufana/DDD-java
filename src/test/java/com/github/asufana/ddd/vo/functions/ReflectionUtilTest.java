@@ -8,6 +8,7 @@ import java.util.*;
 
 import org.junit.*;
 
+import com.github.asufana.ddd.entity.*;
 import com.github.asufana.ddd.vo.*;
 import com.github.asufana.ddd.vo.share.*;
 
@@ -52,4 +53,35 @@ public class ReflectionUtilTest {
         final List<Field> fields = ReflectionUtil.getManyToOneAnnotationFields(new T.VoGroupManyToOne());
         assertThat(fields.size(), is(1));
     }
+    
+    //------------------------------------
+    
+    @Test
+    public void testGetCallerClass() throws Exception {
+        final Class<?> callerClass = new ChildClass().callerClass();
+        assertThat(callerClass.equals(ParentClass.class), is(true));
+    }
+    
+    public static class ChildClass extends ParentClass {
+        public ChildClass() {
+            super();
+        }
+        
+        @Override
+        public Class<?> callerClass() {
+            return super.callerClass();
+        }
+        
+        @Override
+        public void isSatisfied() {}
+    }
+    
+    public static abstract class ParentClass extends AbstractEntity<ParentClass> {
+        public ParentClass() {}
+        
+        public Class<?> callerClass() {
+            return ReflectionUtil.getCallerClass();
+        }
+    }
+    
 }
