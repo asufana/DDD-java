@@ -22,7 +22,7 @@ public abstract class ToStringFunction {
             field.setAccessible(true);
             final Object object = field.get(vo);
             return object != null
-                    ? (String) object
+                    ? object.toString()
                     : "";
         }
         catch (IllegalArgumentException | IllegalAccessException e) {
